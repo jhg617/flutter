@@ -1,0 +1,33 @@
+# Flutter/Dart 관련 파일
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pubspec.lock
+build/
+
+# IDE 관련 파일 (예: Android Studio/IntelliJ)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# 운영체제 관련 파일
+.DS_Store
+Thumbs.db
+
+# Android 관련 파일
+android/local.properties
+android/key.properties
+android/.gradle
+android/build
+android/captures
+android/gradlew
+android/gradlew.bat
+
+# iOS 관련 파일
+ios/Runner.xcworkspace
+ios/Flutter/Generated.xcconfig
+ios/Pods/
+ios/.symlinks/
