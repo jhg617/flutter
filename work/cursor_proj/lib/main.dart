@@ -8,10 +8,15 @@ void main() {
     /// Scaffold는 바로 아래에 위치한다.
     /// 위젯 -> Widget
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: Center(
           child: Text(
             '이음:사람과 사람을 잇다',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         )
       ),
