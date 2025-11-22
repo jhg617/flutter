@@ -12,13 +12,8 @@ void main() {
       home: Scaffold(
         backgroundColor: Colors.black,
         body: Center(
-          child: Text(
-            '이음:사람과 사람을 잇다',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        )
+          child: Text('이음:사람과 사람을 잇다', style: TextStyle(color: Colors.white)),
+        ),
       ),
     ), // MaterialApp
   );
