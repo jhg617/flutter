@@ -31,3 +31,6 @@ ios/Runner.xcworkspace
 ios/Flutter/Generated.xcconfig
 ios/Pods/
 ios/.symlinks/
+
+# 문서 관련 파일
+docs/
