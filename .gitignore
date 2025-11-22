@@ -34,3 +34,6 @@ ios/.symlinks/
 
 # 문서 관련 파일
 docs/
+
+# 작업내역 관련 파일
+work-notes/
