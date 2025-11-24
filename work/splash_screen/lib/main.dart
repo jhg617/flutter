@@ -4,7 +4,17 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: HomeScreen(),
+    ),
+  );
+}
+
+/// StatelessWidget
+class HomeScreen extends StatelessWidget{
+  /// build 함수 필요
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
         /// 335CB0
         backgroundColor: Color(0xFF335CB0),
         body: Column(
@@ -20,7 +30,6 @@ void main() {
             ),
           ],
         ),
-      ),
-    ),
-  );
+      );
+  }
 }
