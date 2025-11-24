@@ -23,20 +23,20 @@ class HomeScreen extends StatelessWidget {
             horizontal: 32.0,
           ),
           child: Column(
-          /// 중앙 정렬
-          mainAxisAlignment: MainAxisAlignment.center,
-          /// children 파라미터는 여러 개의 위젯을 배열 형태로 전달
-          children: [
+            /// 중앙 정렬
+            mainAxisAlignment: MainAxisAlignment.center,
+            /// children 파라미터는 여러 개의 위젯을 배열 형태로 전달
+            children: [
               Image.asset(
                 'asset/img/logo.png',
               ),
-              SizedBox(height: 20.0),
-            CircularProgressIndicator(
-              color: Colors.white,
+              SizedBox(height: 28.0),
+              CircularProgressIndicator(
+                color: Colors.white,
             ),
           ],
         ),
-        ),
-      );
+      ),
+    );
   }
 }
