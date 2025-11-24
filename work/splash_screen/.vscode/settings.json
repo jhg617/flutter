@@ -1,0 +1,24 @@
+{
+  "dart.env": {
+    "ANDROID_HOME": "/Users/hgjeon/Library/Android/sdk"
+  },
+  "dart.flutterSdkPath": "/opt/homebrew/share/flutter",
+  "dart.flutterSdkPaths": [
+    "/opt/homebrew/share/flutter"
+  ],
+  "dart.enableSdkFormatter": true,
+  "dart.enableSnippets": true,
+  "dart.lineLength": 80,
+  "dart.analysisExcludedFolders": [
+    "**/.dart_tool/**",
+    "**/build/**"
+  ],
+  "terminal.integrated.env.osx": {
+    "ANDROID_HOME": "/Users/hgjeon/Library/Android/sdk",
+    "PATH": "/opt/homebrew/bin:/Users/hgjeon/Library/Java/JavaVirtualMachines/temurin-21.0.6/Contents/Home/bin:/Users/hgjeon/Library/Android/sdk/emulator:/Users/hgjeon/Library/Android/sdk/platform-tools:/Users/hgjeon/Library/Android/sdk/cmdline-tools/latest/bin:${env:PATH}"
+  },
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true,
+  "dart.warnWhenEditingFilesOutsideWorkspace": false
+}
+
