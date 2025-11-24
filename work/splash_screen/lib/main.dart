@@ -9,9 +9,10 @@ void main() {
   );
 }
 
-/// StatelessWidget
-class HomeScreen extends StatelessWidget{
-  /// build 함수 필요
+// stless 단축어로 위젯 생성(생성자 포함)
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
