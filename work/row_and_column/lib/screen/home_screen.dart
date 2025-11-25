@@ -14,9 +14,10 @@ class HomeScreen extends StatelessWidget {
           height: double.infinity,
           child: Column(
             children: [
-              Expanded(
+              Flexible(
                 //flex: 1, // 1은 기본값
                 flex: 2, //flex는 남는 공간을 차지하게 되는 비율을 결정한다.
+                fit: FlexFit.tight,
                 child: Container(
                   height: 50.0,
                   width: 50.0,
