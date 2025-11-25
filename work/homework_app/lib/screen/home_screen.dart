@@ -8,20 +8,19 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: colors.map((e) => Container(
-                height: 50.0,
-                width: 50.0,
-                color: e,
-              )
-              ).toList()
+                children: colors.map((e) => Container(
+                  height: 50.0,
+                  width: 50.0,
+                  color: e,
+                ),
+                ).toList(),
               ),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
@@ -30,8 +29,8 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 ],
-               ),
-               Row(
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: colors.map((e) => Container(
                   height: 50.0,
@@ -39,8 +38,8 @@ class HomeScreen extends StatelessWidget {
                   color: e,
                 ),
                 ).toList(),
-               ),
-               Row(
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
@@ -49,9 +48,8 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.green,
                   ),
                 ],
-                ),
+              ),
             ],
-            ),
         ),
       ),
     );
