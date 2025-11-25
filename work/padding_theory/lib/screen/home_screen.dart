@@ -9,10 +9,13 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Container(
           color: Colors.red,
-          child: Container(
-            color: Colors.blue,
-            width: 50.0,
-            height: 50.0,
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Container(
+              color: Colors.blue,
+              width: 50.0,
+              height: 50.0,
+            ),
           ),
         ),
       ),
