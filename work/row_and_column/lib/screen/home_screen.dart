@@ -10,12 +10,13 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           color: Colors.black,
-          width: double.infinity, /// 최대한의 크기 지정
-          child: Column(
+          //width: double.infinity, /// 최대한의 크기 지정
+          height: double.infinity,
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
-            //crossAxisAlignment: CrossAxisAlignment.center, // 기본값은 center
-            crossAxisAlignment: CrossAxisAlignment.stretch, // 컬럼의 크기를 최대한으로 늘림
+            crossAxisAlignment: CrossAxisAlignment.center, // 기본값은 center
+            //crossAxisAlignment: CrossAxisAlignment.stretch, // 컬럼의 크기를 최대한으로 늘림
             children: colors.map(
               (e) => Container(
                 height: 50.0,
