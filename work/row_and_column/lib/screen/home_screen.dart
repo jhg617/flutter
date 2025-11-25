@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
                 width: 50.0,
                 color: e,
               ),
-            ).toList(),
+            ).toList(), /// map함수 이후 toList() 함수를 통해 리스트로 변환
           ),
         ),
       ),
