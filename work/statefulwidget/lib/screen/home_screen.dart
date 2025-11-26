@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+class _HomeScreenState extends State<HomeScreen> {
   Color color = Colors.blue;
 
   @override
@@ -19,6 +24,8 @@ class HomeScreen extends StatelessWidget {
                   color = Colors.blue;
                 }
                 print('색상 변경: color: $color');
+
+                setState(() {}); // 상태 변경 후 화면 갱신
               },
               child: Text(
                 '색상 변경!',
