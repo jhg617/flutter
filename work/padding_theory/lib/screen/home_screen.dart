@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           color: Colors.red,
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(32.0), // 네 방향 모두 32px 만큼 패딩을 줌
             child: Container(
               color: Colors.blue,
               width: 50.0,
