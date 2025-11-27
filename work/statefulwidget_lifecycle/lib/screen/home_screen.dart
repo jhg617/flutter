@@ -9,6 +9,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool show = false;
+  Color color = Colors.red;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if(show) CodeFactoryWidget(), // show가 true일 때만 CodeFactoryWidget를 표시
+            if(show) GestureDetector(
+              onTap: () {
+                setState(() {
+                  color = color == Colors.blue ? Colors.red : Colors.blue;
+                });
+              },
+              child: CodeFactoryWidget(
+                color: color,
+              ),
+            ), // show가 true일 때만 CodeFactoryWidget를 표시
             SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: (){
@@ -37,8 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
 /// StatefulWidget 라이프사이클 예제 위젯
 class CodeFactoryWidget extends StatefulWidget {
+  final Color color;
   /// 1) Constructor: StatefulWidget 생성 시 호출 (State 객체는 아직 생성되지 않음)
-  CodeFactoryWidget({super.key}) {
+  CodeFactoryWidget({
+    required this.color, 
+    super.key}) {
     print('1) Stateful Widget Constructor');
   }
 
@@ -74,24 +87,12 @@ class _CodeFactoryWidgetState extends State<CodeFactoryWidget> {
   @override
   Widget build(BuildContext context) {
     print('5) Stateful Widget build');
-    return GestureDetector(
-      // 탭 제스처를 감지하는 위젯
-      // 사용자가 위젯을 탭하면 onTap 콜백이 실행됩니다.
-      onTap: () {
-        // setState()를 호출하여 상태를 변경합니다.
-        // 이 메서드가 호출되면 build()가 다시 실행되어 UI가 업데이트됩니다.
-        setState(() {
-          // color 변수의 값을 토글합니다 (빨강 <-> 파랑)
-          color = color == Colors.red ? Colors.blue : Colors.red;
-        });
-      },
-      child: Container(
-          // color 상태 변수의 값을 사용하여 컨테이너의 색상을 설정합니다.
-          // setState()로 color가 변경되면 이 부분이 자동으로 다시 빌드됩니다.
-          color: color,
-          width: 50.0,
-          height: 50.0,
-      ),
+    return Container(
+        // color 상태 변수의 값을 사용하여 컨테이너의 색상을 설정합니다.
+        // setState()로 color가 변경되면 이 부분이 자동으로 다시 빌드됩니다.
+        color: widget.color,
+        width: 50.0,
+        height: 50.0,
     );
   }
 
