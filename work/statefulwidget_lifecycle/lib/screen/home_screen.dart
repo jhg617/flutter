@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool show = true;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +18,16 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CodeFactoryWidget(),
+            if(show) CodeFactoryWidget(), // show가 true일 때만 CodeFactoryWidget를 표시
+            SizedBox(height: 32.0),
+            ElevatedButton(
+              onPressed: (){
+                setState(() {
+                  show = !show;
+                });
+              },
+              child: Text('클릭해서 보이기/안보이기'),
+            ),
           ],
         ),
       )
