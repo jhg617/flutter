@@ -52,6 +52,10 @@ class CodeFactoryWidget extends StatefulWidget {
 }
 
 class _CodeFactoryWidgetState extends State<CodeFactoryWidget> {
+  /// 위젯의 색상을 저장하는 상태 변수
+  /// setState()를 통해 이 값을 변경하면 build()가 다시 호출되어 UI가 업데이트됩니다.
+  Color color = Colors.red;
+
   /// 3) initState: State 생성 후 한 번만 호출, 초기화 작업 수행
   @override
   void initState() {
@@ -70,10 +74,24 @@ class _CodeFactoryWidgetState extends State<CodeFactoryWidget> {
   @override
   Widget build(BuildContext context) {
     print('5) Stateful Widget build');
-    return Container(
-        color: Colors.red,
-        width: 50.0,
-        height: 50.0,
+    return GestureDetector(
+      // 탭 제스처를 감지하는 위젯
+      // 사용자가 위젯을 탭하면 onTap 콜백이 실행됩니다.
+      onTap: () {
+        // setState()를 호출하여 상태를 변경합니다.
+        // 이 메서드가 호출되면 build()가 다시 실행되어 UI가 업데이트됩니다.
+        setState(() {
+          // color 변수의 값을 토글합니다 (빨강 <-> 파랑)
+          color = color == Colors.red ? Colors.blue : Colors.red;
+        });
+      },
+      child: Container(
+          // color 상태 변수의 값을 사용하여 컨테이너의 색상을 설정합니다.
+          // setState()로 color가 변경되면 이 부분이 자동으로 다시 빌드됩니다.
+          color: color,
+          width: 50.0,
+          height: 50.0,
+      ),
     );
   }
 
