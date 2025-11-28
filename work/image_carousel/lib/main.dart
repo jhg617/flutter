@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_carousel/screen/home_screen2.dart';
+import 'package:image_carousel/screen/home_screen.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: HomeScreen2(),
-  )
+    home: HomeScreen(),
+    ),
   );
 }
