@@ -53,7 +53,18 @@ dev_dependencies:
 flutter:
   assets:
     - asset/img/
-    - asset/font/
+  fonts:
+    - family: parisienne
+      fonts:
+        - asset: asset/font/Parisienne-Regular.ttf
+
+    - family: sunflower
+      fonts:
+        - asset: asset/font/Sunflower-Light.ttf
+        - asset: asset/font/Sunflower-Medium.ttf
+          weight: 500 # 폰트 굵기(100 ~ 900)
+        - asset: asset/font/Sunflower-Bold.ttf
+          weight: 700
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
