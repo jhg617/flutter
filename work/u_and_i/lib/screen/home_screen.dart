@@ -35,6 +35,8 @@ class _Top extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Expanded(
       // 핵심: Expanded는 남은 공간을 균등하게 분배 (화면을 반으로 나눔)
       child: Container(
@@ -47,26 +49,14 @@ class _Top extends StatelessWidget {
             // color: 텍스트 색상 지정
             Text(
               'U&I',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'parisienne', // 디자인: 장식적 폰트로 타이틀 강조
-                fontSize: 80.0,
-              ),
+              style: textTheme.displayLarge,
             ),
             Text('우리 처음 만난날',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'sunflower',
-                fontSize: 30.0,
-              ),
+              style: textTheme.bodyLarge,
             ),
             Text(
               '2023.07.03',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0, // 디자인: 날짜는 작은 크기로 보조 정보 표현
-                fontFamily: 'sunflower',
-              ),
+              style: textTheme.bodyMedium,
             ),
             // 핵심: IconButton의 iconSize로 아이콘 크기, color로 아이콘 색상 지정
             IconButton(
@@ -78,13 +68,7 @@ class _Top extends StatelessWidget {
               ),
             ),
             Text('D+880',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'sunflower',
-                fontSize: 50.0,
-                // 핵심: fontWeight로 폰트 굵기 지정 (w700 = Bold, pubspec.yaml의 weight와 매칭)
-                fontWeight: FontWeight.w700, // 디자인: 굵게 표시해 중요 정보 강조
-              ),
+              style: textTheme.displayMedium,
             ),
           ],
         ),
