@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +21,14 @@ class HomeScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              _Top(),
+              _Top(
+                selectedDate: selectedDate,
+                // 하트 버튼 클릭 시 날짜 선택 다이얼로그 표시
+                // VoidCallback 타입의 콜백 함수를 전달
+                onPressed: onHeartPressed,
+              ),
+
+              // 이미지 영역
               _Bottom(),
             ],
           ),
@@ -22,19 +36,51 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  void onHeartPressed() {
+    // iOS 스타일 DatePicker 다이얼로그 표시
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: true, // 외부 탭 시 다이얼로그 닫힘
+      // builder: 다이얼로그에 표시할 위젯을 반환하는 함수
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.center, // 화면 중앙에 배치
+          child: Container(
+            color: Colors.white,
+            height: 300.0, // DatePicker 높이 고정
+            child: CupertinoDatePicker(
+              // 날짜만 선택 모드 (옵션: time, dateAndTime)
+              mode: CupertinoDatePickerMode.date,
+              // 날짜 변경 시 호출되는 콜백 (DateTime 타입의 선택된 날짜 전달)
+              onDateTimeChanged: (DateTime date) {
+                // 선택된 날짜를 상태에 저장
+                setState(() {
+                  selectedDate = date;
+                }); // 현재는 콘솔 출력만, 실제로는 상태에 저장 필요
+              },
+              // 날짜 표시 순서: 연-월-일 (한국식, 옵션: mdy, dmy)
+              dateOrder: DatePickerDateOrder.ymd,
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 // 위쪽 영역 담당하는 위젯
-class _Top extends StatefulWidget {
-  const _Top({super.key});
+class _Top extends StatelessWidget {
+  final DateTime selectedDate;
+  final VoidCallback? onPressed;
+  
+  const _Top({
+    required this.selectedDate,
+    required this.onPressed,
+    super.key,
+  });
 
-  @override
-  State<_Top> createState() => _TopState();
-}
-
-class _TopState extends State<_Top> {
   // 선택된 날짜를 저장하는 상태 변수
-  DateTime selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     // 오늘날짜를 변수에 저장
@@ -62,36 +108,7 @@ class _TopState extends State<_Top> {
             IconButton(
               iconSize: 60.0,
               color: Colors.red,
-              onPressed: () {
-                // iOS 스타일 DatePicker 다이얼로그 표시
-                showCupertinoDialog(
-                  context: context,
-                  barrierDismissible: true, // 외부 탭 시 다이얼로그 닫힘
-                  // builder: 다이얼로그에 표시할 위젯을 반환하는 함수
-                  builder: (BuildContext context) {
-                    return Align(
-                      alignment: Alignment.center, // 화면 중앙에 배치
-                      child: Container(
-                        color: Colors.white,
-                        height: 300.0, // DatePicker 높이 고정
-                        child: CupertinoDatePicker(
-                          // 날짜만 선택 모드 (옵션: time, dateAndTime)
-                          mode: CupertinoDatePickerMode.date,
-                          // 날짜 변경 시 호출되는 콜백 (DateTime 타입의 선택된 날짜 전달)
-                          onDateTimeChanged: (DateTime date) {
-                            // 선택된 날짜를 상태에 저장
-                            setState(() {
-                              selectedDate = date;
-                            }); // 현재는 콘솔 출력만, 실제로는 상태에 저장 필요
-                          },
-                          // 날짜 표시 순서: 연-월-일 (한국식, 옵션: mdy, dmy)
-                          dateOrder: DatePickerDateOrder.ymd,
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
+              onPressed: onPressed,
               icon: const Icon(Icons.favorite),
             ),
             Text(
