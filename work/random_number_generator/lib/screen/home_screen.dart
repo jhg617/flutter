@@ -9,63 +9,101 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold: Material Design 앱의 기본 화면 구조 제공
     return Scaffold(
+      // 배경색: 상수로 정의된 primaryColor 사용
       backgroundColor: primaryColor,
       // SafeArea: 시스템 UI(노치, 상태바 등) 영역을 피해 콘텐츠를 안전하게 배치
       body: SafeArea(
-        // Column: 자식 위젯들을 수직으로 배치하는 레이아웃 위젯
+        // 좌우 여백 16px 추가 (화면 가장자리와 콘텐츠 사이 간격)
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
+            // stretch: 자식 위젯들이 가로폭을 최대한 사용하도록 설정
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// 상단 헤더 영역: 제목과 설정 아이콘 버튼
-              // Row: 자식 위젯들을 수평으로 배치하는 레이아웃 위젯
-              Row(
-                // spaceBetween: 양 끝에 배치 (제목은 왼쪽, 설정 버튼은 오른쪽)
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // 화면 제목 텍스트
-                  Text(
-                    '랜덤숫자 생성기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.settings,
-                    ),
-                  ),
-                ],
-              ),
+              _Header(),
           
               /// 중간 콘텐츠 영역: 생성된 숫자 표시
-              // Expanded: 남은 공간을 모두 차지하도록 확장하는 위젯
-              // 화면 크기가 변경되어도 항상 남은 공간을 모두 사용
-              Expanded(
-                child: Text('''
-              123
-              456
-              789
-              '''),
-              ),
+              _Body(),
           
               /// 하단 액션 영역: 랜덤 숫자 생성 버튼
-              // ElevatedButton: Material Design의 입체감 있는 버튼
-              ElevatedButton(
-                onPressed: (){},
-                child: Text('생성하기!')
-              ),
+              _Footer()
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+/// 상단 헤더 위젯
+/// - 제목 텍스트와 설정 아이콘 버튼을 좌우로 배치
+/// - private 클래스(_Header): 이 파일 내에서만 사용
+class _Header extends StatelessWidget {
+  const _Header({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      // spaceBetween: 제목은 왼쪽, 설정 버튼은 오른쪽에 배치
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // 화면 제목: 흰색, 30px, 굵은 글씨
+        Text(
+          '랜덤숫자 생성기',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        IconButton(
+          color: redColor,
+          onPressed: () {},
+          icon: Icon(
+            Icons.settings,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// 중간 콘텐츠 영역 위젯
+/// - Expanded: 남은 공간을 모두 차지하여 숫자 표시 영역 확장
+/// - 현재는 임시 텍스트 (나중에 이미지나 다른 위젯으로 교체 예정)
+class _Body extends StatelessWidget {
+  const _Body({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Text('''
+        123
+        456
+        789
+      '''),
+    );
+  }
+}
+
+/// 하단 액션 버튼 위젯
+/// - 랜덤 숫자 생성 기능을 실행하는 버튼
+/// - 빨간색 배경(redColor), 흰색 텍스트
+class _Footer extends StatelessWidget {
+  const _Footer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      // 버튼 스타일: 빨간색 배경, 흰색 텍스트
+      style: ElevatedButton.styleFrom(
+        backgroundColor: redColor,
+        foregroundColor: Colors.white,
+      ),
+      child: Text('생성하기!'),
     );
   }
 }
