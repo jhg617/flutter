@@ -23,12 +23,12 @@ class HomeScreen extends StatelessWidget {
             children: [
               /// 상단 헤더 영역: 제목과 설정 아이콘 버튼
               _Header(),
-          
+
               /// 중간 콘텐츠 영역: 생성된 숫자 표시
               _Body(),
-          
+
               /// 하단 액션 영역: 랜덤 숫자 생성 버튼
-              _Footer()
+              _Footer(),
             ],
           ),
         ),
@@ -61,9 +61,7 @@ class _Header extends StatelessWidget {
         IconButton(
           color: redColor,
           onPressed: () {},
-          icon: Icon(
-            Icons.settings,
-          ),
+          icon: Icon(Icons.settings),
         ),
       ],
     );
@@ -79,11 +77,28 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Text('''
-        123
-        456
-        789
-      '''),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
+            [
+                  [1, 2, 3],
+                  [4, 5, 6],
+                  [7, 8, 9],
+                ]
+                .map(
+                  (e) => Row(
+                    children: e
+                        .map(
+                          (number) => Text(
+                            number.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                )
+                .toList(),
+      ),
     );
   }
 }
