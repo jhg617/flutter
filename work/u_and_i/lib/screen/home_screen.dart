@@ -72,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
 // 위쪽 영역 담당하는 위젯
 class _Top extends StatelessWidget {
   final DateTime selectedDate;
+  // Stateless 위젯은 직접 상태를 변경하지 않으므로
+  // callback을 통해 상위 Stateful 위젯에 상태 변경을 요청한다.
   final VoidCallback? onPressed;
   
   const _Top({
@@ -80,7 +82,6 @@ class _Top extends StatelessWidget {
     super.key,
   });
 
-  // 선택된 날짜를 저장하는 상태 변수
   @override
   Widget build(BuildContext context) {
     // 오늘날짜를 변수에 저장
