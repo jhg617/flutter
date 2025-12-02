@@ -13,20 +13,20 @@ class HomeScreen extends StatelessWidget {
             height: 200,
             width: 200,
             color: Colors.red,
-            child: Row(
-              // 부모 Container의 제약(200x200) 내에서만 배치 가능
-              children: [
-                Container(
-                  // 크기 제약: 50x50으로 고정
-                  height: 50,
-                  width: 50,
-                  color: Colors.blue,
-                ),
-              ],
+            child: Align(
+              // Alignment(x, y): x는 -1(왼쪽)~1(오른쪽), y는 -1(위)~1(아래)
+              alignment: Alignment(
+                0.5,
+                -0.5), // 중앙에서 오른쪽 위로
+              child: Container(
+                height: 50,
+                width: 50,
+                color: Colors.blue,
+              ),
+            ),
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
