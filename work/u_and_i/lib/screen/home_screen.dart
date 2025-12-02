@@ -52,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CupertinoDatePicker(
               // 날짜만 선택 모드 (옵션: time, dateAndTime)
               mode: CupertinoDatePickerMode.date,
+              initialDateTime: selectedDate, // 초기 선택된 날짜를 표시
+              maximumDate: DateTime.now(), // 오늘 날짜까지만 선택 가능
               // 날짜 변경 시 호출되는 콜백 (DateTime 타입의 선택된 날짜 전달)
               onDateTimeChanged: (DateTime date) {
                 // 선택된 날짜를 상태에 저장
