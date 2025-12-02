@@ -79,25 +79,34 @@ class _Body extends StatelessWidget {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children:
-            [
-                  [1, 2, 3],
-                  [4, 5, 6],
-                  [7, 8, 9],
-                ]
-                .map(
-                  (e) => Row(
-                    children: e
-                        .map(
-                          (number) => Text(
-                            number.toString(),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                )
-                .toList(),
+        children: [
+          // 바깥쪽 리스트: 2차원 리스트 (3개의 행)
+          // [[1,2,3], [4,5,6], [7,8,9]]
+          [1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9],
+        ]
+            // 첫 번째 map: 각 행(리스트)을 Row 위젯으로 변환
+            // e = [1,2,3] → Row 위젯
+            // e = [4,5,6] → Row 위젯
+            // e = [7,8,9] → Row 위젯
+            .map(
+              (e) => Row(
+                children: e
+                    // 두 번째 map: 각 행의 숫자를 Text 위젯으로 변환
+                    // number = 1 → Text('1')
+                    // number = 2 → Text('2')
+                    // number = 3 → Text('3')
+                    .map(
+                      (number) => Text(
+                        number.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                    .toList(), // Iterable을 List로 변환 (Row의 children은 List<Widget> 필요)
+              ),
+            )
+            .toList(), // Iterable을 List로 변환 (Column의 children은 List<Widget> 필요)
       ),
     );
   }
