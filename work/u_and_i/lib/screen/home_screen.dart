@@ -24,11 +24,22 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _Top extends StatelessWidget {
+// 위쪽 영역 담당하는 위젯
+class _Top extends StatefulWidget {
   const _Top({super.key});
 
   @override
+  State<_Top> createState() => _TopState();
+}
+
+class _TopState extends State<_Top> {
+  // 선택된 날짜를 저장하는 상태 변수
+  DateTime selectedDate = DateTime.now();
+  @override
   Widget build(BuildContext context) {
+    // 오늘날짜를 변수에 저장
+    final now = DateTime.now();
+
     final textTheme = Theme.of(context).textTheme;
 
     return Expanded(
@@ -44,7 +55,8 @@ class _Top extends StatelessWidget {
               style: textTheme.bodyLarge,
             ),
             Text(
-              '2023.07.03',
+              // 선택된 년도, 월, 일을 화면에 표시
+              '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
               style: textTheme.bodyMedium,
             ),
             IconButton(
@@ -67,7 +79,10 @@ class _Top extends StatelessWidget {
                           mode: CupertinoDatePickerMode.date,
                           // 날짜 변경 시 호출되는 콜백 (DateTime 타입의 선택된 날짜 전달)
                           onDateTimeChanged: (DateTime date) {
-                            print(date); // 현재는 콘솔 출력만, 실제로는 상태에 저장 필요
+                            // 선택된 날짜를 상태에 저장
+                            setState(() {
+                              selectedDate = date;
+                            }); // 현재는 콘솔 출력만, 실제로는 상태에 저장 필요
                           },
                           // 날짜 표시 순서: 연-월-일 (한국식, 옵션: mdy, dmy)
                           dateOrder: DatePickerDateOrder.ymd,
@@ -79,7 +94,9 @@ class _Top extends StatelessWidget {
               },
               icon: const Icon(Icons.favorite),
             ),
-            Text('D+880',
+            Text(
+              // D+ 표시 (오늘 날짜와 선택된 날짜의 차이를 계산하여 D+ 표시)
+              'D+${now.difference(selectedDate).inDays + 1}',
               style: textTheme.displayMedium,
             ),
           ],
