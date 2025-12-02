@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,22 +7,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // 핵심: Scaffold의 backgroundColor는 전체 화면 배경색 지정 (Colors.pink[100]은 연한 핑크)
       backgroundColor: Colors.pink[100],
       body: SafeArea(
-        // 핵심: SafeArea는 노치, 상태바 등 시스템 UI 영역을 피해 안전한 영역만 사용
-        // bottom: false → 하단은 시스템 영역까지 사용 (홈 인디케이터 영역 포함)
-        bottom: false,
+        bottom: false, // 하단 시스템 영역까지 사용
         child: SizedBox(
-          // 핵심: MediaQuery로 화면의 실제 크기 가져오기 (동적 대응)
-          // Double.infinity도 가능하지만 MediaQuery가 더 정확한 크기 제공
           width: MediaQuery.of(context).size.width,
           child: Column(
-            // 핵심: Column은 수직 방향으로 위젯들을 배치
             children: [
-              _Top(), // _Top 위젯 사용 (위쪽 영역)
-              _Bottom(), // _Bottom 위젯 사용 (아래쪽 영역)
-              
+              _Top(),
+              _Bottom(),
             ],
           ),
         ),
@@ -38,34 +32,52 @@ class _Top extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Expanded(
-      // 핵심: Expanded는 남은 공간을 균등하게 분배 (화면을 반으로 나눔)
       child: Container(
         child: Column(
-          // 핵심: 내부 Column은 메인축 방향(수직)으로 요소들을 배치
           children: [
-            // 핵심: Text 위젯의 TextStyle로 디자인 커스터마이징
-            // fontFamily: pubspec.yaml에 등록한 커스텀 폰트 사용 (소문자로 입력)
-            // fontSize: 텍스트 크기 지정 (double 타입)
-            // color: 텍스트 색상 지정
             Text(
               'U&I',
               style: textTheme.displayLarge,
             ),
-            Text('우리 처음 만난날',
+            Text(
+              '우리 처음 만난날',
               style: textTheme.bodyLarge,
             ),
             Text(
               '2023.07.03',
               style: textTheme.bodyMedium,
             ),
-            // 핵심: IconButton의 iconSize로 아이콘 크기, color로 아이콘 색상 지정
             IconButton(
-              iconSize: 60.0, // 디자인: 아이콘 크기를 크게 설정해 시각적 포인트 강조
-              color: Colors.red, // 디자인: 빨간색으로 하트 아이콘 강조
-              onPressed: () {},
-              icon: const Icon(
-                Icons.favorite
-              ),
+              iconSize: 60.0,
+              color: Colors.red,
+              onPressed: () {
+                // iOS 스타일 DatePicker 다이얼로그 표시
+                showCupertinoDialog(
+                  context: context,
+                  barrierDismissible: true, // 외부 탭 시 다이얼로그 닫힘
+                  // builder: 다이얼로그에 표시할 위젯을 반환하는 함수
+                  builder: (BuildContext context) {
+                    return Align(
+                      alignment: Alignment.center, // 화면 중앙에 배치
+                      child: Container(
+                        color: Colors.white,
+                        height: 300.0, // DatePicker 높이 고정
+                        child: CupertinoDatePicker(
+                          // 날짜만 선택 모드 (옵션: time, dateAndTime)
+                          mode: CupertinoDatePickerMode.date,
+                          // 날짜 변경 시 호출되는 콜백 (DateTime 타입의 선택된 날짜 전달)
+                          onDateTimeChanged: (DateTime date) {
+                            print(date); // 현재는 콘솔 출력만, 실제로는 상태에 저장 필요
+                          },
+                          // 날짜 표시 순서: 연-월-일 (한국식, 옵션: mdy, dmy)
+                          dateOrder: DatePickerDateOrder.ymd,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.favorite),
             ),
             Text('D+880',
               style: textTheme.displayMedium,
@@ -83,13 +95,10 @@ class _Bottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      // 핵심: 두 번째 Expanded로 나머지 절반 공간 차지 (화면을 반반으로 분할)
       child: Container(
-        // 핵심: Image.asset으로 pubspec.yaml에 등록한 이미지 에셋 사용
-        // 디자인: Expanded 내부에서 자동으로 이미지가 화면 너비에 맞춰지고 비율 유지됨
         child: Image.asset(
           'asset/img/middle_image.png',
-          fit: BoxFit.cover, // 이미지가 컨테이너를 채우도록 설정
+          fit: BoxFit.cover,
         ),
       ),
     );
