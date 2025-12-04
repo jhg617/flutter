@@ -4,8 +4,19 @@ import 'package:random_number_generator/constant/color.dart';
 
 /// 랜덤 숫자 생성기 메인 화면
 /// StatelessWidget: 상태가 없는 정적 위젯 (상태 변경이 필요하면 StatefulWidget으로 변경 필요)
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<int> numbers = [
+    123,
+    456,
+    789,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +36,22 @@ class HomeScreen extends StatelessWidget {
               _Header(),
 
               /// 중간 콘텐츠 영역: 생성된 숫자 표시
-              _Body(),
+              _Body(
+                numbers: numbers,
+              ),
 
               /// 하단 액션 영역: 랜덤 숫자 생성 버튼
-              _Footer(),
+              _Footer(
+                onPressed: (){
+                  setState(() {
+                    numbers = [
+                      999,
+                      888,
+                      777,
+                    ];
+                  });
+                },
+              ),
             ],
           ),
         ),
@@ -72,20 +95,18 @@ class _Header extends StatelessWidget {
 /// - Expanded: 남은 공간을 모두 차지하여 숫자 표시 영역 확장
 /// - 현재는 임시 텍스트 (나중에 이미지나 다른 위젯으로 교체 예정)
 class _Body extends StatelessWidget {
-  const _Body({super.key});
+  final List<int> numbers;
+
+  const _Body({
+    required this.numbers,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // 바깥쪽 리스트: 2차원 리스트 (3개의 행)
-          // [[1,2,3], [4,5,6], [7,8,9]]
-          123,
-          456,
-          789,
-        ]
+        children: numbers
             .map((e) => e.toString().split(''))
             // 첫 번째 map: 각 행(리스트)을 Row 위젯으로 변환
             // e = [1,2,3] → Row 위젯
@@ -118,12 +139,17 @@ class _Body extends StatelessWidget {
 /// - 랜덤 숫자 생성 기능을 실행하는 버튼
 /// - 빨간색 배경(redColor), 흰색 텍스트
 class _Footer extends StatelessWidget {
-  const _Footer({super.key});
+  final VoidCallback onPressed;
+
+  const _Footer({
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       // 버튼 스타일: 빨간색 배경, 흰색 텍스트
       style: ElevatedButton.styleFrom(
         backgroundColor: redColor,
