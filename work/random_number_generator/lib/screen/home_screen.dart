@@ -98,9 +98,10 @@ class _Body extends StatelessWidget {
                     // number = 2 → Text('2')
                     // number = 3 → Text('3')
                     .map(
-                      (number) => Text(
-                        number.toString(),
-                        style: TextStyle(color: Colors.white),
+                      (number) => Image.asset(
+                        'asset/img/$number.png',
+                        width: 50.0,
+                        height: 70.0,
                       ),
                     )
                     .toList(), // Iterable을 List로 변환 (Row의 children은 List<Widget> 필요)
