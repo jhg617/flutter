@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:random_number_generator/constant/color.dart';
 import 'dart:math';
 
+import 'package:random_number_generator/screen/setting_screen.dart';
+
 /// 랜덤 숫자 생성기 메인 화면
 /// StatelessWidget: 상태가 없는 정적 위젯 (상태 변경이 필요하면 StatefulWidget으로 변경 필요)
 class HomeScreen extends StatefulWidget {
@@ -34,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// 상단 헤더 영역: 제목과 설정 아이콘 버튼
-              _Header(),
+              _Header(
+                onPressed: onSettingIconPressed,
+              ),
 
               /// 중간 콘텐츠 영역: 생성된 숫자 표시
               _Body(
@@ -48,6 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  onSettingIconPressed() {
+    //context: 위젯트리의 정보를 담고있다.
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context){
+          return SettingScreen();
+        },
       ),
     );
   }
@@ -73,7 +88,12 @@ class _HomeScreenState extends State<HomeScreen> {
 /// - 제목 텍스트와 설정 아이콘 버튼을 좌우로 배치
 /// - private 클래스(_Header): 이 파일 내에서만 사용
 class _Header extends StatelessWidget {
-  const _Header({super.key});
+  final VoidCallback onPressed;
+
+  const _Header({
+    required this.onPressed,
+    super.key,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +112,7 @@ class _Header extends StatelessWidget {
         ),
         IconButton(
           color: redColor,
-          onPressed: () {},
+          onPressed: onPressed,
           icon: Icon(Icons.settings),
         ),
       ],
