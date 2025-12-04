@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:random_number_generator/constant/color.dart';
+import 'dart:math';
 
 /// 랜덤 숫자 생성기 메인 화면
 /// StatelessWidget: 상태가 없는 정적 위젯 (상태 변경이 필요하면 StatefulWidget으로 변경 필요)
@@ -42,21 +43,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
               /// 하단 액션 영역: 랜덤 숫자 생성 버튼
               _Footer(
-                onPressed: (){
-                  setState(() {
-                    numbers = [
-                      999,
-                      888,
-                      777,
-                    ];
-                  });
-                },
+                onPressed: generateRandomNumbers,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  generateRandomNumbers() {
+    final rand = Random();
+
+    final Set<int> newNumbers = {};
+
+    while(newNumbers.length < 3){
+      final randomNumber = rand.nextInt(1000);
+
+      newNumbers.add(randomNumber);
+    }
+
+    setState(() {
+      numbers = newNumbers.toList();
+    });
   }
 }
 
