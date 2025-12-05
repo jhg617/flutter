@@ -65,7 +65,46 @@ class HomeScreen extends StatelessWidget {
                 child: Text('Outlined Button'),
               ),
               TextButton(
-                onPressed: (){},
+                // [1] onPressed: null이면 버튼은 자동으로 비활성화(Disabled) 상태가 됩니다.
+                onPressed: null,//(){},
+                style: ButtonStyle(
+                  // [2] backgroundColor: 버튼의 배경 색상을 상태(State)에 따라 결정합니다.
+                  backgroundColor: MaterialStateProperty.resolveWith(
+                    (Set<MaterialState> states) {
+                      // [3] MaterialState.pressed: 사용자가 버튼을 누르고 있는 상태
+                      if (states.contains(MaterialState.pressed)){
+                        return Colors.red; // 눌렀을 때 배경 색상: 빨간색
+                      }
+
+                      // [4] 그 외 상태 (기본, 비활성화 등): 검은색을 반환
+                      return Colors.black; // 기본 색상
+                    },
+                  ),
+                  // [5] foregroundColor: 버튼 위의 텍스트/아이콘 색상(전경색)을 상태에 따라 결정합니다.
+                  foregroundColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      if (states.contains(MaterialState.pressed)){
+                        return Colors.black;
+                      }
+                      // [6] MaterialState.disabled: 버튼이 비활성화된 상태 => 버튼을 누를 수 없는 상태
+                      if(states.contains(MaterialState.disabled)){
+                        return Colors.red;
+                      }
+                      // [7] 그 외 상태 (활성화된 기본 상태): 흰색을 반환
+                      return Colors.white;
+                    },
+                  ),
+                  // [8] minimumSize: 버튼의 최소 크기를 상태에 따라 결정합니다.
+                  minimumSize: MaterialStateProperty.resolveWith(
+                    (states) {
+                      if(states.contains(MaterialState.pressed)){
+                        return Size(200, 150);
+                      }
+                      // [9] 그 외 상태 (기본, 비활성화 등): (300, 200)을 반환
+                      return Size(300, 200);
+                    },
+                  ),
+                ),
                 child: Text('Text Button'),
               ),
             ],
