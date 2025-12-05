@@ -44,6 +44,13 @@ class HomeScreen extends StatelessWidget {
               ),
               OutlinedButton(
                 onPressed: (){},
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.red,
+                  shadowColor: Colors.black,
+                  // elevation을 넣어야 그림자 효과가 나타남
+                  //elevation: 10.0,
+                ),
                 child: Text('Outlined Button'),
               ),
               TextButton(
