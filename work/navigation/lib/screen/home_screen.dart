@@ -11,11 +11,25 @@ class HomeScreen extends StatelessWidget {
       title: 'HomeScreen',
       children: [
         OutlinedButton(
-              onPressed: (){
+              onPressed: () async{
+                final result = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return RouteOneScreen(
+                        number: 20,
+                      );
+                    }
+                  )
+                );
+
+                print(result);
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return RouteOneScreen();
+                      return RouteOneScreen(
+                        // 넘겨줄 숫자
+                        number: 20,
+                      );
                     },
                   ),
                 );
