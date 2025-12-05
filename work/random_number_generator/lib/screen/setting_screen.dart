@@ -3,7 +3,11 @@ import 'package:random_number_generator/component/number_to_image.dart';
 import 'package:random_number_generator/constant/color.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({super.key});
+  final int maxNumber;
+  const SettingScreen({
+    required this.maxNumber,
+    super.key
+  });
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -13,6 +17,12 @@ class _SettingScreenState extends State<SettingScreen> {
   // 상태를 상위에서 관리: 여러 위젯이 같은 값을 공유할 수 있도록 상태를 위로 올림
   // 단일 소유자: maxNumber는 여기서만 관리하여 데이터 일관성 보장
   double maxNumber = 1000;
+
+  initState() {
+    super.initState();
+
+    maxNumber = widget.maxNumber.toDouble();
+  }
 
   @override
   Widget build(BuildContext context) {
