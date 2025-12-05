@@ -44,12 +44,23 @@ class HomeScreen extends StatelessWidget {
               ),
               OutlinedButton(
                 onPressed: (){},
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.red,
-                  shadowColor: Colors.black,
-                  // elevation을 넣어야 그림자 효과가 나타남
-                  //elevation: 10.0,
+                style: ButtonStyle(
+                  /// Material State
+                  /// 
+                  /// hovered - 호버링 상태 (마우스 커서를 올려놓은 상태)
+                  /// focused - 포커스 됐을 때 (텍스트 필드)
+                  /// pressed - 눌렀을때
+                  /// dragged - 드래그 됐을때
+                  /// selected - 선택됐을때 (체크박스, 라디오버튼)
+                  /// scrollUnder - 다른 컴포넌트 밑으로 스크롤링 됐을때
+                  /// disabled - 비활성화 상태
+                  /// error - 에러 상태
+                  backgroundColor: MaterialStateProperty.all( // 어떤 상태이던간에 적용할 색깔 지정
+                    Colors.red,
+                  ),
+                  minimumSize: MaterialStateProperty.all( // onPressed가 null이어도 기본 최소 크기 보장
+                    Size(200, 150),
+                  ),
                 ),
                 child: Text('Outlined Button'),
               ),
