@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<int> numbers = [123, 456, 789];
+  int maxNumber = 1000;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +48,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  onSettingIconPressed() {
+  onSettingIconPressed() async {
     //context: 위젯트리의 정보를 담고있다.
-    Navigator.of(context).push(
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
           return SettingScreen();
         },
       ),
     );
+
+    maxNumber = result;
   }
 
   generateRandomNumbers() {
@@ -64,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final Set<int> newNumbers = {};
 
     while (newNumbers.length < 3) {
-      final randomNumber = rand.nextInt(1000);
+      final randomNumber = rand.nextInt(maxNumber);
 
       newNumbers.add(randomNumber);
     }

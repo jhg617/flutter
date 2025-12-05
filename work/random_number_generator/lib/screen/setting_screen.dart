@@ -35,11 +35,19 @@ class _SettingScreenState extends State<SettingScreen> {
                 value: maxNumber,
                 onChanged: onSliderChanged,
               ),
-              _Button(),
+              _Button(
+                onPressed: onSavePressed,
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  onSavePressed(){
+    Navigator.of(context).pop(
+      maxNumber.toInt(),
     );
   }
 
@@ -53,7 +61,11 @@ class _SettingScreenState extends State<SettingScreen> {
 // 네비게이션 처리만 담당하는 순수 위젯
 // 상태가 없어서 항상 같은 결과를 렌더링함
 class _Button extends StatelessWidget {
-  const _Button({super.key});
+  final VoidCallback onPressed;
+  const _Button({
+    required this.onPressed,
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +74,7 @@ class _Button extends StatelessWidget {
         backgroundColor: redColor,
         foregroundColor: Colors.white,
       ),
-      onPressed: (){
-        Navigator.of(context).pop();
-      },
+      onPressed: onPressed,
       child: Text('저장'),
     );
   }
