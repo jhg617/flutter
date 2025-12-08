@@ -30,6 +30,15 @@ class RouteOneScreen extends StatelessWidget {
         ),
         OutlinedButton(
           onPressed: (){
+            Navigator.of(context).maybePop(
+              //데이터 돌려주기
+              456,
+            );
+          },
+          child: Text('Maybe Pop'),
+        ),
+        OutlinedButton(
+          onPressed: (){
             Navigator.of(context).push(
               //데이터 돌려주기
               MaterialPageRoute(

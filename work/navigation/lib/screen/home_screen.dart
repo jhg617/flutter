@@ -26,6 +26,24 @@ class HomeScreen extends StatelessWidget {
           },
           child: Text('Push'),
         ),
+        OutlinedButton(
+          onPressed: (){
+            Navigator.of(context).pop(
+              //데이터 돌려주기
+              456,
+            );
+          },
+          child: Text('Pop'),
+        ),
+        OutlinedButton(
+          onPressed: (){
+            Navigator.of(context).maybePop(
+              //데이터 돌려주기
+              456,
+            );
+          },
+          child: Text('Maybe Pop'),
+        ),
       ],
     );
   }
