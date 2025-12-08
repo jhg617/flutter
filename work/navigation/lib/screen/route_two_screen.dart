@@ -54,6 +54,23 @@ class RouteTwoScreen extends StatelessWidget {
           // 라우트 이름으로 화면 이동하기
           child: Text('Push Replacement Named'),
         ),
+        OutlinedButton(
+          onPressed: () {
+            // 라우트 이름으로 화면 이동하기
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              '/three',
+              (route){
+                /// 만약 삭제할거면 (Route Stack) false 반환
+                /// 만약 삭제를 안할거면 true 반환
+                //return false;
+                return route.settings.name == '/';
+              },
+              arguments: 999,
+            );
+          },
+          // 라우트 이름으로 화면 이동하기
+          child: Text('Push Named And Remove Until'),
+        ),
       ],
     );
   }
