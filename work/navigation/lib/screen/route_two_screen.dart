@@ -20,11 +20,10 @@ class RouteTwoScreen extends StatelessWidget {
         OutlinedButton(
           onPressed: (){
             //Navigator.of(context).pop();
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (BuildContext context){
-                return RouteThreeScreen();
-              }
-              ),
+            // 네비게이션 스택에 화면 이동하기
+            Navigator.of(context).pushNamed(
+              '/three', // 이동하고싶은 라우트 이름
+              arguments: 1111111, // 넘겨줄 데이터
             );
           },
           child: Text('Pop')
