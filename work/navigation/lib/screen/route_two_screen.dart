@@ -45,11 +45,13 @@ class RouteTwoScreen extends StatelessWidget {
         ),
         OutlinedButton(
           onPressed: () {
+            // 라우트 이름으로 화면 이동하기
             Navigator.of(context).pushReplacementNamed(
               '/three',
               arguments: 999,
             );
           },
+          // 라우트 이름으로 화면 이동하기
           child: Text('Push Replacement Named'),
         ),
       ],
