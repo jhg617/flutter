@@ -26,7 +26,31 @@ class RouteTwoScreen extends StatelessWidget {
               arguments: 1111111, // 넘겨줄 데이터
             );
           },
-          child: Text('Pop')
+          child: Text('Push Route Three'),
+        ),
+        OutlinedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return RouteThreeScreen();
+                },
+                settings: RouteSettings(
+                  arguments: 999,
+                ),
+              ),
+            );
+          },
+          child: Text('Push Replacement'),
+        ),
+        OutlinedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed(
+              '/three',
+              arguments: 999,
+            );
+          },
+          child: Text('Push Replacement Named'),
         ),
       ],
     );
