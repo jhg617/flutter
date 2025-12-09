@@ -125,6 +125,7 @@ class _VideoPlayer extends StatefulWidget {
 class _VideoPlayerState extends State<_VideoPlayer> {
   // 비디오 재생을 제어하는 컨트롤러
   late VideoPlayerController videoPlayerController;
+  bool showIcons = true;
 
   @override
   void dispose() {
@@ -174,36 +175,52 @@ class _VideoPlayerState extends State<_VideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AspectRatio(
-        // 비디오의 원본 비율을 유지하여 왜곡 방지
-        aspectRatio: videoPlayerController.value.aspectRatio,
-        child: Stack(
-          // Stack을 사용하여 비디오 위에 컨트롤 UI 오버레이
-          children: [
-            // 실제 비디오를 재생하는 위젯
-            VideoPlayer(
-              videoPlayerController,
-            ),
-            // 재생/정지, 빨리감기, 되감기 버튼
-            _PlayButton(
-              onForwardPressed: onForwardPressed,
-              onPlayPressed: onPlayPressed,
-              onReversePressed: onReversePressed,
-              isPlaying: videoPlayerController.value.isPlaying,
-            ),
-            // 하단 진행 바 및 시간 표시
-            _Bottom(
-              position: videoPlayerController.value.position,
-              maxPosition: videoPlayerController.value.duration,
-              onSliderChanged: onSliderChanged,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          showIcons = !showIcons;
+        });
+      },
+      child: Center(
+        child: AspectRatio(
+          // 비디오의 원본 비율을 유지하여 왜곡 방지
+          aspectRatio: videoPlayerController.value.aspectRatio,
+          child: Stack(
+            // Stack을 사용하여 비디오 위에 컨트롤 UI 오버레이
+            children: [
+              // 실제 비디오를 재생하는 위젯
+              VideoPlayer(
+                videoPlayerController,
               ),
-            // 다른 비디오 선택 버튼
-            _PickAnotherVideo(
-              onPressed: widget.onAnotherVideoPicked,
-            ),
-            
-          ],
+              if(showIcons)
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black.withOpacity(0.5),
+              ),
+              // 재생/정지, 빨리감기, 되감기 버튼
+              if(showIcons)
+              _PlayButton(
+                onForwardPressed: onForwardPressed,
+                onPlayPressed: onPlayPressed,
+                onReversePressed: onReversePressed,
+                isPlaying: videoPlayerController.value.isPlaying,
+              ),
+              // 하단 진행 바 및 시간 표시
+              if(showIcons)
+              _Bottom(
+                position: videoPlayerController.value.position,
+                maxPosition: videoPlayerController.value.duration,
+                onSliderChanged: onSliderChanged,
+                ),
+              // 다른 비디오 선택 버튼
+              if(showIcons)
+              _PickAnotherVideo(
+                onPressed: widget.onAnotherVideoPicked,
+              ),
+              
+            ],
+          ),
         ),
       ),
     );
