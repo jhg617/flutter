@@ -196,6 +196,7 @@ class _VideoPlayerState extends State<_VideoPlayer> {
             _Bottom(
               position: videoPlayerController.value.position,
               maxPosition: videoPlayerController.value.duration,
+              onSliderChanged: onSliderChanged,
               ),
             // 다른 비디오 선택 버튼
             _PickAnotherVideo(
@@ -206,6 +207,11 @@ class _VideoPlayerState extends State<_VideoPlayer> {
         ),
       ),
     );
+  }
+
+  onSliderChanged(double val) {
+    final position = Duration(seconds: val.toInt());
+    videoPlayerController.seekTo(position);
   }
 
   // 3초 앞으로 이동 (빨리감기)
@@ -299,10 +305,12 @@ class _PlayButton extends StatelessWidget {
 class _Bottom extends StatelessWidget {
   final Duration position;
   final Duration maxPosition;
+  final ValueChanged<double> onSliderChanged;
 
   const _Bottom({
     required this.position,
     required this.maxPosition,
+    required this.onSliderChanged,
     super.key,
   });
 
@@ -336,7 +344,7 @@ class _Bottom extends StatelessWidget {
                   position.inSeconds.toDouble(),
                 max: 
                   maxPosition.inSeconds.toDouble(),
-                onChanged: (double val){}, // TODO: 드래그로 재생 위치 변경 기능 추가 가능
+                onChanged: onSliderChanged,
               ),
             ),
             // 영상 전체 길이 (MM:SS 형식)
