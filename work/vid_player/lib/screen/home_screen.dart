@@ -172,7 +172,17 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                   // 왼쪽 회전 아이콘 (반시계 방향)
                   IconButton(
                     color: Colors.white,
-                    onPressed: (){},
+                    onPressed: (){
+                      final currentPosition = videoPlayerController.value.position;
+
+                      Duration position = Duration();
+
+                      if(currentPosition.inSeconds > 3) {
+                        position = currentPosition - Duration(seconds: 3);
+                      }
+
+                      videoPlayerController.seekTo(position);
+                    },
                     icon: Icon(Icons.rotate_left),
                   ),
                   // 재생/정지 토글 버튼: Listener와 연동되어 아이콘 자동 업데이트
@@ -198,7 +208,20 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                   ),
                   // 오른쪽 회전 아이콘 (시계 방향)
                   IconButton(
-                    onPressed: (){},
+                    color: Colors.white,
+                    onPressed: (){
+                      final maxPosition = videoPlayerController.value.duration;
+                      final currentPosition = videoPlayerController.value.position;
+
+                      Duration position = maxPosition;
+
+                      if((maxPosition - Duration(seconds: 3)).inSeconds >
+                          currentPosition.inSeconds) {
+                        position = currentPosition + Duration(seconds: 3);
+                      }
+
+                      videoPlayerController.seekTo(position);
+                    },
                     icon: Icon(Icons.rotate_right),
                   ),
                 ],
