@@ -133,6 +133,14 @@ class _VideoPlayerState extends State<_VideoPlayer> {
 
     await videoPlayerController.initialize();
 
+    // Controller에 Listener 추가: 재생/정지 상태 변경 시 UI 자동 업데이트
+    // play() 또는 pause() 호출 시 Controller 상태가 변경되고, 
+    // 이 Listener가 자동으로 트리거되어 setState()를 호출하여 UI를 갱신합니다.
+    videoPlayerController.addListener(() {
+      setState(() {});
+    });
+
+    // Controller 초기화 완료 후 첫 번째 UI 렌더링을 위해 setState 호출
     setState(() {
       
     });
@@ -167,33 +175,25 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                     onPressed: (){},
                     icon: Icon(Icons.rotate_left),
                   ),
-                  // 중앙 재생/일시정지 아이콘
-                  // 재생 상태에 따라 아이콘과 기능이 동적으로 변경되는 토글 버튼
+                  // 재생/정지 토글 버튼: Listener와 연동되어 아이콘 자동 업데이트
                   IconButton(
                     color: Colors.white,
-                    // 버튼 클릭 시 실행되는 콜백 함수
                     onPressed: (){
-                      // setState를 호출하여 UI를 다시 그리도록 함
-                      // 비디오 재생 상태가 변경되면 아이콘도 함께 업데이트되어야 하기 때문
+                      // 재생 상태에 따라 play/pause 토글
+                      // Controller 상태 변경 시 위의 Listener가 자동으로 UI 업데이트
                       setState(() {
-                        // videoPlayerController.value.isPlaying: 현재 비디오가 재생 중인지 확인
                         if (videoPlayerController.value.isPlaying) {
-                          // 재생 중이면 → 일시정지로 전환
                           videoPlayerController.pause();
                         } else {
-                          // 일시정지 상태면 → 재생으로 전환
                           videoPlayerController.play();
                         }
                       });
                     },
-                    // 아이콘을 재생 상태에 따라 동적으로 변경
-                    // 삼항 연산자를 사용하여 조건부 렌더링
+                    // 재생 상태에 따라 아이콘 동적 변경
                     icon: Icon(
-                      // 재생 중이면 일시정지 아이콘(pause) 표시
-                      // 일시정지 상태면 재생 아이콘(play_arrow) 표시
                       videoPlayerController.value.isPlaying
-                        ? Icons.pause      // 재생 중일 때: 일시정지 아이콘
-                        : Icons.play_arrow, // 일시정지일 때: 재생 아이콘
+                        ? Icons.pause
+                        : Icons.play_arrow,
                     ),
                   ),
                   // 오른쪽 회전 아이콘 (시계 방향)
@@ -212,7 +212,8 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               left: 0,    // 왼쪽 끝에서 시작
               right: 0,   // 오른쪽 끝까지 확장
               child: Slider(
-                value: 0,
+                value: videoPlayerController.value.position.inSeconds.toDouble(),
+                max: videoPlayerController.value.duration.inSeconds.toDouble(),
                 onChanged: (double val){},
               ),
             ),
