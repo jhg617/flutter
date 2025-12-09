@@ -11,15 +11,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // 선택된 비디오 파일을 저장하는 상태 변수
+  // null이면 비디오 선택 화면, 값이 있으면 비디오 플레이어 화면 표시
   XFile? video;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      // 비디오 선택 여부에 따라 다른 화면 표시 (조건부 렌더링)
       body: video != null
           ? _VideoPlayer(
             video: video!,
+            onAnotherVideoPicked: onLogoTap,
           )
           : _VideoSelect(
             onLogoTap: onLogoTap,
@@ -27,11 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // 갤러리에서 비디오를 선택하는 함수
   onLogoTap() async {
     final video = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
     );
 
+    // 선택된 비디오를 상태에 저장하여 플레이어 화면으로 전환
     setState(() {
       this.video = video;
     });
@@ -104,9 +110,11 @@ class _Title extends StatelessWidget {
 
 class _VideoPlayer extends StatefulWidget {
   final XFile video;
+  final VoidCallback onAnotherVideoPicked;
 
   const _VideoPlayer({
     required this.video,
+    required this.onAnotherVideoPicked,
     super.key,
   });
 
@@ -115,29 +123,52 @@ class _VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<_VideoPlayer> {
-  late final VideoPlayerController videoPlayerController;
+  // 비디오 재생을 제어하는 컨트롤러
+  late VideoPlayerController videoPlayerController;
+
+  @override
+  void dispose() {
+    // 위젯이 제거될 때 컨트롤러를 해제하여 메모리 누수 방지
+    videoPlayerController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-
+    // 위젯이 생성될 때 비디오 컨트롤러 초기화
     initializeController();
   }
 
+  @override
+  didUpdateWidget(covariant _VideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // 다른 비디오가 선택되면 새로운 컨트롤러로 재초기화
+    if(oldWidget.video.path != widget.video.path) {
+      initializeController();
+    }
+  }
+
+  // 비디오 컨트롤러를 초기화하는 비동기 함수
   initializeController() async {
+    // 파일 경로를 사용하여 비디오 컨트롤러 생성
     videoPlayerController = VideoPlayerController.file(
       File(
         widget.video.path
       ),
     );
 
+    // 비디오 초기화 완료 대기 (메타데이터 로드 등)
     await videoPlayerController.initialize();
 
     // 재생/정지 상태 변경 시 UI 자동 업데이트
+    // 컨트롤러의 상태가 변경될 때마다 setState 호출하여 UI 갱신
     videoPlayerController.addListener(() {
       setState(() {});
     });
 
+    // 초기화 완료 후 UI 업데이트
     setState(() {});
   }
 
@@ -145,24 +176,30 @@ class _VideoPlayerState extends State<_VideoPlayer> {
   Widget build(BuildContext context) {
     return Center(
       child: AspectRatio(
+        // 비디오의 원본 비율을 유지하여 왜곡 방지
         aspectRatio: videoPlayerController.value.aspectRatio,
         child: Stack(
+          // Stack을 사용하여 비디오 위에 컨트롤 UI 오버레이
           children: [
+            // 실제 비디오를 재생하는 위젯
             VideoPlayer(
               videoPlayerController,
             ),
+            // 재생/정지, 빨리감기, 되감기 버튼
             _PlayButton(
               onForwardPressed: onForwardPressed,
               onPlayPressed: onPlayPressed,
               onReversePressed: onReversePressed,
               isPlaying: videoPlayerController.value.isPlaying,
             ),
+            // 하단 진행 바 및 시간 표시
             _Bottom(
               position: videoPlayerController.value.position,
               maxPosition: videoPlayerController.value.duration,
               ),
+            // 다른 비디오 선택 버튼
             _PickAnotherVideo(
-              onPressed: () {},
+              onPressed: widget.onAnotherVideoPicked,
             ),
             
           ],
@@ -171,12 +208,14 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     );
   }
 
+  // 3초 앞으로 이동 (빨리감기)
   onForwardPressed(){
     final maxPosition = videoPlayerController.value.duration;
     final currentPosition = videoPlayerController.value.position;
 
     Duration position = maxPosition;
 
+    // 끝에서 3초 이내가 아니면 3초 앞으로 이동, 아니면 끝으로 이동
     if((maxPosition - Duration(seconds: 3)).inSeconds >
         currentPosition.inSeconds) {
       position = currentPosition + Duration(seconds: 3);
@@ -185,6 +224,7 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     videoPlayerController.seekTo(position);
   }
 
+  // 재생/정지 토글
   onPlayPressed(){
     setState(() {
       if (videoPlayerController.value.isPlaying) {
@@ -195,11 +235,13 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     });
   }
 
+  // 3초 뒤로 이동 (되감기)
   onReversePressed(){
     final currentPosition = videoPlayerController.value.position;
 
     Duration position = Duration();
 
+    // 현재 위치가 3초 이상이면 3초 뒤로 이동, 아니면 처음으로 이동
     if(currentPosition.inSeconds > 3) {
       position = currentPosition - Duration(seconds: 3);
     }
@@ -286,13 +328,15 @@ class _Bottom extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
+            // 비디오 진행 상태를 표시하는 슬라이더
+            // 현재는 읽기 전용 (onChanged가 비어있음)
             Expanded(
               child: Slider(
                 value: 
                   position.inSeconds.toDouble(),
                 max: 
                   maxPosition.inSeconds.toDouble(),
-                onChanged: (double val){},
+                onChanged: (double val){}, // TODO: 드래그로 재생 위치 변경 기능 추가 가능
               ),
             ),
             // 영상 전체 길이 (MM:SS 형식)
