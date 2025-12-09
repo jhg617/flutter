@@ -240,10 +240,54 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               bottom: 0,  // 하단에서 0 픽셀 떨어진 위치
               left: 0,    // 왼쪽 끝에서 시작
               right: 0,   // 오른쪽 끝까지 확장
-              child: Slider(
-                value: videoPlayerController.value.position.inSeconds.toDouble(),
-                max: videoPlayerController.value.duration.inSeconds.toDouble(),
-                onChanged: (double val){},
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      '${videoPlayerController
+                          .value
+                          .position
+                          .inMinutes
+                        .toString()
+                          .padLeft(2, '0')}:${(videoPlayerController
+                        .value
+                        .position
+                        .inSeconds % 60).toString()
+                        .padLeft(2, '0')}',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Expanded(
+                      child: Slider(
+                        value: 
+                          videoPlayerController.value.position.inSeconds.toDouble(),
+                        max: 
+                          videoPlayerController.value.duration.inSeconds.toDouble(),
+                        onChanged: (double val){},
+                      ),
+                    ),
+                    Text(
+                      '${videoPlayerController
+                          .value
+                          .duration
+                          .inMinutes
+                          .toString()
+                          .padLeft(2, '0')}:${(videoPlayerController
+                        .value
+                        .duration
+                        .inSeconds % 60)
+                        .toString()
+                        .padLeft(2, '0')}',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             
