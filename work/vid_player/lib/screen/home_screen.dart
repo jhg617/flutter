@@ -143,8 +143,69 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     return Center(
       child: AspectRatio(
         aspectRatio: videoPlayerController.value.aspectRatio,
-        child: VideoPlayer(
-          videoPlayerController,
+        // Stack 위젯: 여러 위젯을 겹쳐서 배치할 수 있게 해주는 위젯
+        // 첫 번째 자식이 가장 아래 레이어, 마지막 자식이 가장 위 레이어
+        child: Stack(
+          children: [
+            // 1. 가장 아래 레이어: 실제 비디오 플레이어
+            // Stack의 첫 번째 자식이므로 배경으로 표시됨
+            VideoPlayer(
+              videoPlayerController,
+            ),
+            
+            // 2. 중앙 레이어: 영상 중앙에 컨트롤 아이콘들 배치
+            // Align 위젯으로 정확한 위치 지정 (중앙 정렬)
+            Align(
+              alignment: Alignment.center,
+              // Row로 여러 아이콘 버튼을 가로로 나열
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // 왼쪽 회전 아이콘 (반시계 방향)
+                  IconButton(
+                    color: Colors.white,
+                    onPressed: (){},
+                    icon: Icon(Icons.rotate_left),
+                  ),
+                  // 중앙 재생/일시정지 아이콘
+                  IconButton(
+                    color: Colors.white,
+                    onPressed: (){},
+                    icon: Icon(Icons.play_arrow),
+                  ),
+                  // 오른쪽 회전 아이콘 (시계 방향)
+                  IconButton(
+                    onPressed: (){},
+                    icon: Icon(Icons.rotate_right),
+                  ),
+                ],
+              ),
+            ),
+            
+            // 3. 하단 레이어: 영상 하단에 재생 진행 바 배치
+            // Positioned 위젯으로 정확한 위치 지정 (하단 전체 너비)
+            Positioned(
+              bottom: 0,  // 하단에서 0 픽셀 떨어진 위치
+              left: 0,    // 왼쪽 끝에서 시작
+              right: 0,   // 오른쪽 끝까지 확장
+              child: Slider(
+                value: 0,
+                onChanged: (double val){},
+              ),
+            ),
+            
+            // 4. 우측 상단 레이어: 우측 상단에 카메라 아이콘 배치
+            // Positioned 위젯으로 우측 상단 모서리에 고정
+            Positioned(
+              right: 0,  // 오른쪽에서 0 픽셀 떨어진 위치 (기본적으로 top: 0)
+              child: IconButton(
+                onPressed: (){},
+                icon: Icon(
+                  Icons.photo_camera_back,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
