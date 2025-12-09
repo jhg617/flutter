@@ -168,10 +168,33 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                     icon: Icon(Icons.rotate_left),
                   ),
                   // 중앙 재생/일시정지 아이콘
+                  // 재생 상태에 따라 아이콘과 기능이 동적으로 변경되는 토글 버튼
                   IconButton(
                     color: Colors.white,
-                    onPressed: (){},
-                    icon: Icon(Icons.play_arrow),
+                    // 버튼 클릭 시 실행되는 콜백 함수
+                    onPressed: (){
+                      // setState를 호출하여 UI를 다시 그리도록 함
+                      // 비디오 재생 상태가 변경되면 아이콘도 함께 업데이트되어야 하기 때문
+                      setState(() {
+                        // videoPlayerController.value.isPlaying: 현재 비디오가 재생 중인지 확인
+                        if (videoPlayerController.value.isPlaying) {
+                          // 재생 중이면 → 일시정지로 전환
+                          videoPlayerController.pause();
+                        } else {
+                          // 일시정지 상태면 → 재생으로 전환
+                          videoPlayerController.play();
+                        }
+                      });
+                    },
+                    // 아이콘을 재생 상태에 따라 동적으로 변경
+                    // 삼항 연산자를 사용하여 조건부 렌더링
+                    icon: Icon(
+                      // 재생 중이면 일시정지 아이콘(pause) 표시
+                      // 일시정지 상태면 재생 아이콘(play_arrow) 표시
+                      videoPlayerController.value.isPlaying
+                        ? Icons.pause      // 재생 중일 때: 일시정지 아이콘
+                        : Icons.play_arrow, // 일시정지일 때: 재생 아이콘
+                    ),
                   ),
                   // 오른쪽 회전 아이콘 (시계 방향)
                   IconButton(
