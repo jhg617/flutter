@@ -246,6 +246,10 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                 ),
                 child: Row(
                   children: [
+                    // 현재 재생 위치 표시 (MM:SS 형식)
+                    // videoPlayerController.value.position: 현재 재생 중인 위치
+                    // inMinutes: 분 단위, inSeconds % 60: 초 단위 (60으로 나눈 나머지)
+                    // padLeft(2, '0'): 두 자리 숫자 형식 유지 (예: 01:05)
                     Text(
                       '${videoPlayerController
                           .value
@@ -270,6 +274,8 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                         onChanged: (double val){},
                       ),
                     ),
+                    // 영상 전체 길이 표시 (MM:SS 형식)
+                    // videoPlayerController.value.duration: 영상의 전체 길이
                     Text(
                       '${videoPlayerController
                           .value
