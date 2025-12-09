@@ -169,18 +169,21 @@ class _VideoPlayerState extends State<_VideoPlayer> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // 왼쪽 회전 아이콘 (반시계 방향)
+                  // 뒤로 돌리기 (3초 뒤로 이동)
                   IconButton(
                     color: Colors.white,
                     onPressed: (){
                       final currentPosition = videoPlayerController.value.position;
 
+                      // 기본값: 시작 위치(0초)
                       Duration position = Duration();
 
+                      // 현재 위치가 3초보다 크면 3초 뒤로 이동
                       if(currentPosition.inSeconds > 3) {
                         position = currentPosition - Duration(seconds: 3);
                       }
 
+                      // 계산된 위치로 재생 위치 이동
                       videoPlayerController.seekTo(position);
                     },
                     icon: Icon(Icons.rotate_left),
@@ -206,20 +209,23 @@ class _VideoPlayerState extends State<_VideoPlayer> {
                         : Icons.play_arrow,
                     ),
                   ),
-                  // 오른쪽 회전 아이콘 (시계 방향)
+                  // 앞으로 돌리기 (3초 앞으로 이동)
                   IconButton(
                     color: Colors.white,
                     onPressed: (){
                       final maxPosition = videoPlayerController.value.duration;
                       final currentPosition = videoPlayerController.value.position;
 
+                      // 기본값: 끝 위치
                       Duration position = maxPosition;
 
+                      // 끝에서 3초 전 위치보다 현재가 앞에 있으면 3초 앞으로 이동
                       if((maxPosition - Duration(seconds: 3)).inSeconds >
                           currentPosition.inSeconds) {
                         position = currentPosition + Duration(seconds: 3);
                       }
 
+                      // 계산된 위치로 재생 위치 이동
                       videoPlayerController.seekTo(position);
                     },
                     icon: Icon(Icons.rotate_right),
