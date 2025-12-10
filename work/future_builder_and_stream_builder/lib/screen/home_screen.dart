@@ -12,8 +12,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<int>(
-          future: getNumber(),
+      body: StreamBuilder<int>(
+          stream: streamNumbers(),
           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
             print('----data----');
             print(snapshot.connectionState);
@@ -27,9 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
             // - ConnectionState.waiting: 실행중 (로딩 중)
 
             // 1. 로딩 중 상태 처리
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
+            if (snapshot.connectionState == ConnectionState.active) {
+              return SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    Text(snapshot.data.toString()),
+                  ],
+                ),
               );
             }
 
@@ -44,8 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
             // 3. 데이터가 존재하는 경우 (성공적으로 완료된 경우)
             if (snapshot.hasData) {
               final data = snapshot.data;
+
               return Center(
-                child: Text('결과: $data'),
+                child: Text(data.toString()),
               );
             }
 
@@ -66,5 +75,15 @@ class _HomeScreenState extends State<HomeScreen> {
     throw '에러!!!!!!';
 
     return random.nextInt(100);
+  }
+
+  Stream<int> streamNumbers() async* {
+    for(int i=0; i<10; i++) {
+      await Future.delayed(Duration(seconds: 1));
+
+      // if(i == 5)
+      //   throw '에러 던져!!!!';
+      yield i;
+    }
   }
 }
