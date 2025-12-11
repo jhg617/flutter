@@ -1,6 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_widgets/const/colors.dart';
 
+class _SliverFixedHeaderDelegate extends SliverPersistentHeaderDelegate{
+  final Widget child;
+  final double maxHeight;
+  final double minHeight;
+
+  _SliverFixedHeaderDelegate({
+    required this.child,
+    required this.maxHeight,
+    required this.minHeight,
+  });
+  
+  @override
+  Widget build(BuildContext context, double shrinkOffset,
+      bool overlapsContent) {
+    return SizedBox.expand(
+      child: child,
+    );
+  }
+
+  @override
+  // 최대 높이
+  double get maxExtent => maxHeight;
+
+  @override
+  // 최소 높이
+  double get minExtent => minHeight;
+
+  @override
+  // covariant - 상속된 클래스도 사용 가능
+  // oldDelegat - build가 실행이 됐을때 이전 Delegate
+  // this - 새로운 delegate
+  // shouldRebuild - 새로 build를 해야할지 말지 결정
+  // false - build 안함, true - 빌드 다시함
+  bool shouldRebuild(_SliverFixedHeaderDelegate oldDelegate) {
+    return oldDelegate.minHeight != minHeight ||
+    oldDelegate.maxHeight != maxHeight ||
+    oldDelegate.child != child;
+  }
+}
+
 /// CustomScrollView: 여러 Sliver 위젯을 하나의 스크롤 영역에서 조합
 class CustomScrollViewScreen extends StatelessWidget {
   // 테스트용 숫자 리스트 (0~99)
@@ -16,10 +56,37 @@ class CustomScrollViewScreen extends StatelessWidget {
         slivers: [
           // 스크롤 가능한 AppBar
           renderSliverAppbar(),
+          renderHeader(),
           renderBuilderSliverList(),
+          renderHeader(),
           renderSliverGridBuilder(),
+          renderHeader(),
+          renderBuilderSliverList(),
+          renderHeader(),
           renderSliverGridBuilder(),
+          renderHeader(),
         ],
+      ),
+    );
+  }
+
+  SliverPersistentHeader renderHeader() {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: _SliverFixedHeaderDelegate(
+        child: Container(
+          color: Colors.black,
+          child: Center(
+            child: Text(
+              '신기하지~',
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
+          ),
+        ),
+        minHeight: 50,
+        maxHeight: 200,
       ),
     );
   }
