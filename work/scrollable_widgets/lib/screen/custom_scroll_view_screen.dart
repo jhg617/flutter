@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_widgets/const/colors.dart';
 
+/// CustomScrollView: 여러 Sliver 위젯을 하나의 스크롤 영역에서 조합
 class CustomScrollViewScreen extends StatelessWidget {
+  // 테스트용 숫자 리스트 (0~99)
   final List<int> numbers = List.generate(100, (index) => index);
 
   CustomScrollViewScreen({super.key});
@@ -10,18 +12,22 @@ class CustomScrollViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        // 여러 Sliver 위젯들을 순서대로 배치
         slivers: [
+          // 스크롤 가능한 AppBar
           SliverAppBar(
             title: Text('CustomScrollViewScreen'),
             centerTitle: true,
           ),
+          // 지연 렌더링 방식의 리스트 (현재 사용 중)
           renderBuilderSliverList(),
         ],
       ),
     );
   }
 
-  // ListView 기본 생성자와 유사함.
+  // ListView 기본 생성자와 유사: 모든 위젯을 미리 생성
+  // 적은 수의 아이템에 적합
   SliverList renderChildSliverList(){
     return SliverList(
       delegate: SliverChildListDelegate(
@@ -37,28 +43,31 @@ class CustomScrollViewScreen extends StatelessWidget {
     );
   }
 
-  // ListView.builder 생성자와 유사함.
+  // ListView.builder와 유사: 지연 렌더링 (Lazy Loading)
+  // 화면에 보이는 아이템만 생성하여 메모리 효율적
   SliverList renderBuilderSliverList(){
     return SliverList(
-      delegate: SliverChildBuilderDelegate((context, index){
-        return renderContainer(
-          color: rainbowColors[index % rainbowColors.length],
-          index: index
-        );
-      },
-      childCount: 100,
+      delegate: SliverChildBuilderDelegate(
+        (context, index){
+          return renderContainer(
+            color: rainbowColors[index % rainbowColors.length],
+            index: index
+          );
+        },
+        childCount: 100, // 총 아이템 개수
       ),
     );
   }
 
+  // 컨테이너 위젯 생성 헬퍼 메서드
   Widget renderContainer({
     required Color color,
     required int index,
     double? height,
-}){
-    print(index);
+  }){
+    //print(index); // 디버깅용: 지연 렌더링 확인
     return Container(
-      height: height ?? 300, //height == null ? 300 : height
+      height: height ?? 300, // 기본값 300
       color: color,
       child: Center(
         child: Text(
