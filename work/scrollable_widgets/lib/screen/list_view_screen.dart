@@ -15,6 +15,8 @@ class ListViewScreen extends StatelessWidget {
     );
   }
 
+  // 3
+  // 2 + 중간 중간에 추가할 위젯 넣을 수 있다.
   Widget renderSeperated(){
     return ListView.separated(
       itemCount: 100,
@@ -39,6 +41,8 @@ class ListViewScreen extends StatelessWidget {
     );
   }
 
+  // 2
+  // 보이는것만 그림
   Widget renderBuilder(){
     return ListView.builder(
       itemCount: 100,
@@ -51,6 +55,8 @@ class ListViewScreen extends StatelessWidget {
     );
   }
 
+  // 1
+  // 기본 - 모두 한번에 그림
   Widget renderDefault(){
     return ListView(
       children: numbers
