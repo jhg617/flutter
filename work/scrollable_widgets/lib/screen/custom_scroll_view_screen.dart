@@ -19,8 +19,7 @@ class CustomScrollViewScreen extends StatelessWidget {
             title: Text('CustomScrollViewScreen'),
             centerTitle: true,
           ),
-          // 지연 렌더링 방식의 리스트 (현재 사용 중)
-          renderBuilderSliverList(),
+          renderSliverGridBuilder(),
         ],
       ),
     );
@@ -28,33 +27,70 @@ class CustomScrollViewScreen extends StatelessWidget {
 
   // ListView 기본 생성자와 유사: 모든 위젯을 미리 생성
   // 적은 수의 아이템에 적합
-  SliverList renderChildSliverList(){
+  SliverList renderChildSliverList() {
     return SliverList(
       delegate: SliverChildListDelegate(
         numbers
-          .map(
-            (e) => renderContainer(
-              color: rainbowColors[e % rainbowColors.length],
-              index: e,
-            ),
-          )
-          .toList(),
+            .map(
+              (e) => renderContainer(
+                color: rainbowColors[e % rainbowColors.length],
+                index: e,
+              ),
+            )
+            .toList(),
       ),
     );
   }
 
   // ListView.builder와 유사: 지연 렌더링 (Lazy Loading)
   // 화면에 보이는 아이템만 생성하여 메모리 효율적
-  SliverList renderBuilderSliverList(){
+  SliverList renderBuilderSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (context, index){
+        (context, index) {
           return renderContainer(
             color: rainbowColors[index % rainbowColors.length],
-            index: index
+            index: index,
           );
         },
         childCount: 100, // 총 아이템 개수
+      ),
+    );
+  }
+
+  // GridView.count 유사함
+  SliverGrid renderChildSliverGrid() {
+    return SliverGrid(
+      delegate: SliverChildListDelegate(
+        numbers
+            .map(
+              (e) => renderContainer(
+                color: rainbowColors[e % rainbowColors.length],
+                index: e,
+              ),
+            )
+            .toList(),
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+    );
+  }
+
+  // GridView.builder 와 비슷함
+  SliverGrid renderSliverGridBuilder(){
+    return SliverGrid(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return renderContainer(
+            color: rainbowColors[index % rainbowColors.length],
+            index: index,
+          );
+        },
+        childCount: 100,
+      ),
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 150,
       ),
     );
   }
@@ -64,7 +100,7 @@ class CustomScrollViewScreen extends StatelessWidget {
     required Color color,
     required int index,
     double? height,
-  }){
+  }) {
     //print(index); // 디버깅용: 지연 렌더링 확인
     return Container(
       height: height ?? 300, // 기본값 300
