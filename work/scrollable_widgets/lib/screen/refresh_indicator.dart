@@ -12,10 +12,11 @@ class RefreshIndicatorScreen extends StatelessWidget {
     return MainLayout(
       title: 'RefreshIndicatorScreen',
       body: RefreshIndicator(
+        // 당겨서 새로고침 시 실행 (Future<void> 반환, 최상단에서만 작동)
         onRefresh: () async {
-          // 서버 요청
           await Future.delayed(Duration(seconds: 3));
         },
+        // 스크롤 가능한 위젯 필수 (ListView, GridView, SingleChildScrollView 등)
         child: ListView(
           children: numbers
               .map(
@@ -30,15 +31,13 @@ class RefreshIndicatorScreen extends StatelessWidget {
     );
   }
 
-  // 컨테이너 위젯 생성 헬퍼 메서드
   Widget renderContainer({
     required Color color,
     required int index,
     double? height,
   }) {
-    //print(index); // 디버깅용: 지연 렌더링 확인
     return Container(
-      height: height ?? 300, // 기본값 300
+      height: height ?? 300,
       color: color,
       child: Center(
         child: Text(
