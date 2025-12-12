@@ -9,11 +9,11 @@ class BasicAppbarTabbarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: TABS.length,
+      length: TABS.length, // 탭 개수 지정 (TabBar와 TabBarView 동기화에 필요)
       child: Scaffold(
         appBar: AppBar(
           title: Text('BasicAppBarScreen'),
-          bottom: TabBar(
+          bottom: TabBar( // AppBar 하단에 탭 버튼들 배치
             tabs: TABS
                 .map(
                   (e) => Tab(
@@ -25,7 +25,7 @@ class BasicAppbarTabbarScreen extends StatelessWidget {
                     ),
                   ),
                 )
-                .toList( ),
+                .toList(), // TabBar의 tabs는 List<Tab> 타입 필요
           ),
         ),
         body: Column(children: []),
