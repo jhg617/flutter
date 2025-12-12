@@ -11,18 +11,22 @@ class HomeScreen extends StatelessWidget {
         title: Text('Home Screen'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: (){
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => BasicAppbarTabbarScreen(),
-                ),
-              );
-            },
-            child: Text('Basic AppBar TabBar Screen'),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
+              onPressed: (){
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => BasicAppbarTabbarScreen(),
+                  ),
+                );
+              },
+              child: Text('Basic AppBar TabBar Screen'),
+            ),
+          ],
+        ),
       ),
     );
   }
